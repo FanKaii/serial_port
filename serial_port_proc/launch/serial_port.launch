@@ -1,0 +1,22 @@
+<launch>
+
+  <arg name="baudrate"          default="115200" />
+  <arg name="tty"          default="0" />
+  <arg name="tty_dev"          default="/dev/ttyUSB" />
+  <arg name="msg_length"          default="10" />  <!-- fixed message length from serial port -->
+
+<!-- topics -->
+
+  <arg name="msg_in_topic"          default="/msg_in" />  <!-- msgs to serial port -->
+  <arg name="msg_out_topic"          default="msg_out" />  <!-- msgs from serial port -->
+
+  <node name="serial_port_proc_node" pkg="serial_port_proc" type="serial_port_node" output="screen" ns="serial_port">
+    <param name="baudrate"         type="int"     value="$(arg baudrate)"/>
+    <param name="tty"         type="int"     value="$(arg tty)"/>
+    <param name="tty_dev"         type="string"     value="$(arg tty_dev)"/>
+    <param name="msg_length"         type="int"     value="$(arg msg_length)"/>
+    
+    <remap from="msgs_in"      to="$(arg msg_in_topic)"/>
+    <remap from="msgs_out"      to="$(arg msg_out_topic)"/>
+  </node>
+</launch>
